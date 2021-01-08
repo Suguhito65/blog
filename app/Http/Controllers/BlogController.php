@@ -19,6 +19,7 @@ class BlogController extends Controller
 
         return view('blog.list', ['blogs' => $blogs]);
     }
+    
     /**
      * ブログ詳細を表示する
      * @param int $id
@@ -35,6 +36,7 @@ class BlogController extends Controller
 
         return view('blog.detail', ['blog' => $blog]);
     }
+
     /**
      * ブログ登録画面を表示する
      * 
@@ -67,6 +69,7 @@ class BlogController extends Controller
         \Session::flash('err_msg', 'ブログを登録しました。');
         return redirect(route('blogs'));
     }
+
     /**
      * ブログ編集フォームを表示する
      * @param int $id
@@ -83,6 +86,7 @@ class BlogController extends Controller
 
         return view('blog.edit', ['blog' => $blog]);
     }
+
     /**
      * ブログ更新する
      * 
@@ -109,6 +113,29 @@ class BlogController extends Controller
         }
 
         \Session::flash('err_msg', 'ブログを更新しました。');
+        return redirect(route('blogs'));
+    }
+
+    /**
+     * ブログ削除
+     * @param int $id
+     * @return view
+    */
+    public function exeDelete($id)
+    {
+        if (empty($id)) {
+            \Session::flash('err_msg', 'データがありません。');
+            return redirect(route('blogs'));
+        }
+
+        try {
+            // ブログを削除
+            Blog::destroy($id);
+        } catch(\Throwable $e) {
+            abort(500);
+        }
+
+        \Session::flash('err_msg', '削除しました。');
         return redirect(route('blogs'));
     }
 }
