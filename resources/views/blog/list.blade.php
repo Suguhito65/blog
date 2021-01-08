@@ -1,4 +1,4 @@
-@extends('layouts')
+@extends('layout')
 @section('title', 'ブログ一覧')
 @section('content')
 <div class="container">
